@@ -9,6 +9,6 @@ class User(AbstractUser):
         STUDENT="STUDENT","student"
     email=models.EmailField(unique=True)
     role=models.CharField(max_length=20,choices=Role.choices,default=Role.STUDENT)
-
-    def __Str__(self):
+    username=models.CharField(max_length=24,unique=True)
+    def __str__(self):
         return self.username
