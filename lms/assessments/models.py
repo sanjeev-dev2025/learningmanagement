@@ -8,6 +8,9 @@ class Assessment(models.Model):
     title=models.CharField(max_length=100)
     descritpion=models.TextField(blank=True)
     total_marks=models.IntegerField(default=100)
-    
+    questions=models.JSONField(default=list,blank=True)
     def __str__(self):
         return f"{self.course}...{self.title}"  
+
+
+    

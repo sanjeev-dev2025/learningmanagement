@@ -12,7 +12,7 @@ class Category(models.Model):
 class Course(models.Model):
     teacher = models.ForeignKey(
         settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,related_name='courses'
     )
     category = models.ForeignKey(
         Category,
@@ -28,7 +28,7 @@ class Course(models.Model):
 class Section(models.Model):
     course = models.ForeignKey(
         Course,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,related_name='sections'
     )
     title = models.CharField(max_length=200)
 
@@ -39,10 +39,11 @@ class Section(models.Model):
 class Lesson(models.Model):
     section = models.ForeignKey(
         Section,
-        on_delete=models.CASCADE
+        on_delete=models.CASCADE,related_name="lessons"
     )
     title = models.CharField(max_length=200)
     content = models.TextField()
+    videos=models.FileField(upload_to="videos/")
 
     def __str__(self):
         return self.title

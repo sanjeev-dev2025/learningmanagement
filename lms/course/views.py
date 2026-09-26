@@ -1,3 +1,4 @@
+from accounts.permissions import IsAdminUserOrTeacher
 from django.shortcuts import render
 from rest_framework import generics
 from course.serializers import CategorySerializer,CourseSerializer,LessonSerializer,SectionSerializer
@@ -22,18 +23,13 @@ class CourseListCreateAPIView(generics.ListCreateAPIView):
     serializer_class=CourseSerializer
     def get_permissions(self):
         if self.request.method=="GET":
-            return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+            return [IsAuthenticated()]
+        return [IsAdminUserOrTeacher()] 
 
 class CourseRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Course.objects.all()
     serializer_class=CourseSerializer
-    def get_permissions(self):
-        if self.request.method=="GET":
-            return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+    permission_classes=[IsAdminUserOrTeacher]
 
 class SectionListCreateAPIView(generics.ListCreateAPIView):
     queryset=Section.objects.all()
@@ -41,8 +37,7 @@ class SectionListCreateAPIView(generics.ListCreateAPIView):
     def get_permissions(self):
         if self.request.method=="GET":
             return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+        return[IsAdminUserOrTeacher()]
 
 class SectionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Section.objects.all()
@@ -50,8 +45,7 @@ class SectionRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView)
     def get_permissions(self):
         if self.request.method=="GET":
             return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+        return[IsAdminUserOrTeacher]
 
 class LessonListCreateAPIView(generics.ListCreateAPIView):
     queryset=Lesson.objects.all()
@@ -59,8 +53,7 @@ class LessonListCreateAPIView(generics.ListCreateAPIView):
     def get_permissions(self):
         if self.request.method=="GET":
             return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+        return[IsAdminUserOrTeacher()]
 
 class LessonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset=Lesson.objects.all()
@@ -68,5 +61,4 @@ class LessonRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     def get_permissions(self):
         if self.request.method=="GET":
             return[IsAuthenticated()]
-        else:
-            return[IsAdminUser() or IsTeacher()]
+        return[IsAdminUserOrTeacher()]
